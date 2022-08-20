@@ -13,12 +13,15 @@ import java.util.concurrent.TimeUnit;
 
 public class FateWheel {
     public HashMap<String, String> wheelGif = new HashMap<>();
+    //could use a hashmap here but the current code works off of an index variable to decide the results. So two ArrayLists will do for now. Refactor later
     public ArrayList<String> wheelSectionNames = new ArrayList<String>();
+    public ArrayList<String> wheelSectionPics = new ArrayList<String>();
     public ArrayList<String> blockList = new ArrayList<String>();
     public HashMap <String, String> userRequestList = new HashMap<>();
 
 
     public String imageUrl;
+    public String wheelImageUrl;
     public String chosenWheelSection;
     public int requestAmountMax = 10000;
     public int requestAmountMin = 1500;
@@ -29,15 +32,20 @@ public class FateWheel {
 
     //constructor
     public FateWheel(){
-        wheelGif.put("long","https://media0.giphy.com/media/xjYpT3akncwRr8YmX6/giphy.gif?cid=790b7611c8c52341ec1c0872da3a013f4355cd341443fb2d&rid=giphy.gif&ct=g");
-        wheelGif.put("rincon", "https://media3.giphy.com/media/rE9yJDK8z4xbZMwkwJ/giphy.gif?cid=790b7611bc4e54c8b3aa7061850dc03405ff751676cfa51b&rid=giphy.gif&ct=g");
-        wheelGif.put("uma", "https://media3.giphy.com/media/n7KhgZEIA8tM1Hdj5e/giphy.gif?cid=790b7611158dd2ad00bbe1ed9e38b0c8f17b7a85be2c6ca5&rid=giphy.gif&ct=g");
-        wheelGif.put("leiss","https://media3.giphy.com/media/JL61l1VijRjcOFaDBB/giphy.gif?cid=790b761127525c79655ec64c143f7b8e893ed206662ad701&rid=giphy.gif&ct=g");
+        wheelGif.put("Long","https://media0.giphy.com/media/xjYpT3akncwRr8YmX6/giphy.gif?cid=790b7611c8c52341ec1c0872da3a013f4355cd341443fb2d&rid=giphy.gif&ct=g");
+        wheelGif.put("Rincon", "https://media3.giphy.com/media/rE9yJDK8z4xbZMwkwJ/giphy.gif?cid=790b7611bc4e54c8b3aa7061850dc03405ff751676cfa51b&rid=giphy.gif&ct=g");
+        wheelGif.put("Uma", "https://media3.giphy.com/media/n7KhgZEIA8tM1Hdj5e/giphy.gif?cid=790b7611158dd2ad00bbe1ed9e38b0c8f17b7a85be2c6ca5&rid=giphy.gif&ct=g");
+        wheelGif.put("Leiss","https://media3.giphy.com/media/JL61l1VijRjcOFaDBB/giphy.gif?cid=790b761127525c79655ec64c143f7b8e893ed206662ad701&rid=giphy.gif&ct=g");
 
-        wheelSectionNames.add("long");
-        wheelSectionNames.add("rincon");
-        wheelSectionNames.add("uma");
-        wheelSectionNames.add("leiss");
+        wheelSectionNames.add("Long");
+        wheelSectionNames.add("Rincon");
+        wheelSectionNames.add("Uma");
+        wheelSectionNames.add("Leiss");
+
+        wheelSectionPics.add("https://uh.edu/nsm/_images/cosc/faculty/long-kevin.png");
+        wheelSectionPics.add("https://cdn.discordapp.com/attachments/955259667318210654/1010371556037374054/GigachadRincon.png");
+        wheelSectionPics.add("https://cdn.discordapp.com/attachments/955259667318210654/1010370070133874859/unknown.png");
+        wheelSectionPics.add("https://uh.edu/nsm/_images/cosc/faculty/leiss-ernst2.jpg");
     }
 
     //reset the game
@@ -76,7 +84,7 @@ public class FateWheel {
     public void spinFateWheel(DataBase server,MessageReceivedEvent event,String userID){
         String user =  "<@" +event.getMember().getId() + ">";
         System.out.println(blockList);
-        if(userRequestList.size() < 4){
+        if(userRequestList.size() < 0){
             event.getChannel().sendMessage("Error: there is not enough users to begin spinning the wheel of fate use &help for more info " + user).queue();
             return;
         }
@@ -90,24 +98,28 @@ public class FateWheel {
         System.out.println(compGuess);
         chosenWheelSection = wheelSectionNames.get(compGuess);
         switch(chosenWheelSection){
-            case "long":
+            case "Long":
                 gameMultiplier = 2;
                 break;
-            case "rincon":
+            case "Rincon":
                 gameMultiplier = 1;
                 break;
-            case "uma":
+            case "Uma":
                 gameMultiplier = -2;
                 break;
-            case "leiss":
+            case "Leiss":
                 gameMultiplier = -1;
                 break;
         }
         System.out.println(chosenWheelSection);
-        imageUrl = wheelGif.get(chosenWheelSection);
+        wheelImageUrl = wheelGif.get(chosenWheelSection);
+        imageUrl = wheelSectionPics.get(compGuess);
+
         calculateResults(server,event);
-        event.getChannel().sendMessage(imageUrl).queue();
-        event.getChannel().sendMessage("The fate has spoken! It has landed on " + chosenWheelSection).queueAfter(5, TimeUnit.SECONDS);
+        event.getChannel().sendMessage(wheelImageUrl).queue();
+        event.getChannel().sendMessage("The Wheel of Fate has spoken! You have been enrolled into " + chosenWheelSection)
+                .queueAfter(5, TimeUnit.SECONDS);
+        event.getChannel().sendMessage(imageUrl).queueAfter(5, TimeUnit.SECONDS);
     }
 
     //validate user input before calculating the winner

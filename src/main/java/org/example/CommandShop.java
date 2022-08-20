@@ -55,15 +55,23 @@ public class CommandShop extends ListenerAdapter {
         shopEmbed.setDescription(shopEmbedDescription);
         shopEmbed.setThumbnail(shopEmbedThumbnail);
         shopEmbed.setImage(shopEmbedImage);
-        for (Map.Entry<String, List<String>> stringListEntry : commandList.entrySet()) {
-            List<String> elementVal = (List<String>) ((Map.Entry) stringListEntry).getValue();
-            shopEmbed.addField((String) ((Map.Entry) stringListEntry).getKey(), stackCashEmote + " Price: $" + elementVal.get(1), true);
-        }
         shopEmbed.setTimestamp(Instant.now());
         shopEmbed.setFooter(tradeMark);
         shopEmbed.setColor(shopEmbedColor);
+
+        int i = 0;
+        for (Map.Entry<String, List<String>> stringListEntry : commandList.entrySet()) {
+            List<String> elementVal = (List<String>) ((Map.Entry) stringListEntry).getValue();
+            shopEmbed.addField((String) ((Map.Entry) stringListEntry).getKey(), stackCashEmote + " Price: $" + elementVal.get(1), true);
+            if(i == 24) //each page gets 24 banners
+                commandShopEmbedPages.add(shopEmbed.build());
+            i++;
+        }
+
+        //add in the empty pages
+        while(commandShopEmbedPages.size() < 3)
+            commandShopEmbedPages.add(shopEmbed.build());
         //refactor by finding a way to fix 'x' amount of items into each MessageEmbed and shove it into this linkedlist, in an efficient manner.
-        commandShopEmbedPages.add(shopEmbed.build());
     }
 
     //display the shop embed to user

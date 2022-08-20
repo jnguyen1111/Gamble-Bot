@@ -52,17 +52,25 @@ public class BannerShop extends ListenerAdapter {
         shopEmbed.setTitle(pepeEmote + "SUSSY'S BANNERSHOP™" + pepeEmote);
         shopEmbed.setThumbnail(shopEmbedThumbnail);
         shopEmbed.setImage(shopEmbedImage);
+        shopEmbed.setTimestamp(Instant.now());
+        shopEmbed.setFooter(tradeMark);
+        shopEmbed.setColor(shopEmbedColor);
+
         if (bannerList == null){return;}
+        int i = 0; //index variable
         //iterate through map and get price of each banner
         for (Map.Entry<String, java.util.List<String>> stringListEntry : bannerList.entrySet()) {
             java.util.List<String> elementVal = (java.util.List<String>) ((Map.Entry) stringListEntry).getValue();
             shopEmbed.addField((String) ((Map.Entry) stringListEntry).getKey(), stackCashEmote + " Price: $" + elementVal.get(1), true);
+            if(i == 24) //each page gets 24 banners
+                bannerShopEmbedPages.add(shopEmbed.build());
+            i++;
         }
-        shopEmbed.setTimestamp(Instant.now());
-        shopEmbed.setFooter(tradeMark);
-        shopEmbed.setColor(shopEmbedColor);
+
+        //add in the empty pages
+        while(bannerShopEmbedPages.size() < 3)
+            bannerShopEmbedPages.add(shopEmbed.build());
         //refactor by finding a way to fix 'x' amount of items into each MessageEmbed and shove it into this linkedlist, in an efficient manner.
-        bannerShopEmbedPages.add(shopEmbed.build());
     }
 
     //display the shop embed to user
