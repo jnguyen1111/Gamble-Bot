@@ -1,23 +1,26 @@
 # Gamble-Bot
 
 ## Screenshots
-![Image 1](cslottoscreenshot/badgeshop page.PNG)
+![Image 1](screenshots/generalcommandpage.PNG)
 
-![Image 2](cslottoscreenshot\bannershop page.PNG)
+![Image 2](screenshots/gamecommandpage.PNG)
 
-![Image 3](cslottoscreenshot\commandshop page.PNG)
+![Image 3](screenshots/cosmeticpage.PNG)
 
-![Image 4](cslottoscreenshot\game command page.PNG)
+![Image 4](screenshots/modtoolpage.PNG)
 
-![Image 5](cslottoscreenshot\mod tool page.PNG)
+![Image 5](screenshots/badgeshoppage.PNG)
 
-![Image 6](cslottoscreenshot\cosmetic page.PNG)
+![Image 6](screenshots/bannershoppage.PNG)
 
-![Image 7](cslottoscreenshot\creditcard page.PNG)
+![Image 7](screenshots/commandshoppage.PNG)
 
-![Image 8](cslottoscreenshot\coinflip page.PNG)
+![Image 8](screenshots/creditcardpage.PNG)
 
-![Image 9](cslottoscreenshot\diceroll page.PNG)
+![Image 9](screenshots/dicerollpage.PNG)
+
+![Image 10](screenshots/coinflippage.PNG)
+
 
 # Table of Contents:
 - [Installation](#Installation)
